@@ -1,3 +1,9 @@
+$(document).ready(function(){
+    //we can either put click handlers here or link to an initialize function
+    //for the board, I think we should use delegated click handlers based in a container obj
+    var game = new Game();
+    $('.container').on('click','div.square', checkIfMoveIsLegal);
+});
 function Game(){
   //this creates an object that serves as the model for the Game
   //it will hold all position and statistical information
@@ -37,13 +43,6 @@ function Game(){
   }
 }
 
-$(document).ready(function(){
-  //we can either put click handlers here or link to an initialize function
-  //for the board, I think we should use delegated click handlers based in a container obj
-  var game = new Game();
-});
-
-
 function resetGame(){
   //this will reset the game board
   game = new Game()
@@ -63,6 +62,7 @@ function checkWinState(){
 }
 
 function checkIfMoveIsLegal(){
+  console.log("Checking if Move is Legal");
   //on click, checks to see if the move is valid
 }
 
