@@ -36,13 +36,13 @@ function Game(){
   this.updateScore = function(amount){
     this.score[this.currentPlayer] += amount;
     this.score[this.getOpponentName()] -= amount;
-  }
+  },
 
   this.checkForGameOver = function(){
     if (this.turn > 60){
       this.playing = false;
     }
-  }
+  },
 
   this.getOpponentName = function(){
     return game.currentPlayer === 'b' ? 'w' : 'b';
@@ -76,12 +76,6 @@ function buildBoard(){
           }
       }
   }
-  // if($('div.square').attr('row','3').attr('col','3')) {
-  //     $('div.square').append(blackPiece);
-  // }
-
-
-  //this is the dom creation of the board, maybe make part of Game object
 }
 
 
@@ -103,69 +97,68 @@ function getOpponentName(){
   return game.currentPlayer === 'b' ? 'w' : 'b';
 }
 
-function handleMove(startingPosArr){
-  var piecesFlipped = null;
-  var directions = {//col then row
-    'w': [0,-1],
-    'nw': [-1,-1],
-    'n': [-1,0],
-    'ne': [-1,1],
-    'e': [0,1],
-    'se': [1,1],
-    's': [1,0],
-    'sw': [1,-1]
-  }
+function handleMove(startingPosArr) {
+    var piecesFlipped = null;
+    var directions = {//col then row
+        'w': [0, -1],
+        'nw': [-1, -1],
+        'n': [-1, 0],
+        'ne': [-1, 1],
+        'e': [0, 1],
+        'se': [1, 1],
+        's': [1, 0],
+        'sw': [1, -1]
+    };
 
-  var validDirections = [];
-  var moveCount = 0;
+    var validDirections = [];
+    var moveCount = 0;
 
-  if (game.gameboard[startingPosArr[0]][startingPosArr[1]]){
-    for (item in directions){
-      checkDirection(item,startingPosArr);
-      moveCount = 0;
-    }
+    if (game.gameboard[startingPosArr[0]][startingPosArr[1]]) {
+        for (item in directions) {
+            checkDirection(item, startingPosArr);
+            moveCount = 0;
+        }
 
-    if (validDirections.length > 0){
-      //add player's piece to board here
-      for (var i = 0; i < validDirections.length; i++){
-        flipPieces(directions.validDirections[i],startingPosArr);
-      }
-      return true
+        if (validDirections.length > 0) {
+            //add player's piece to board here
+            for (var i = 0; i < validDirections.length; i++) {
+                flipPieces(directions.validDirections[i], startingPosArr);
+            }
+            return true
+        } else {
+            return false;
+        }
     } else {
-      return false;
+        return false;
     }
-  } else {
-    return false;
-  }
 
 
-
-
-  function checkDirection(direction,startPoint){//direction is a string (a valid key the obj)
-    var currentPos = startPoint.slice();
-    var newPos = [currentPos[0]+directions.direction[0],currentPos[1]+directions.direction[1]];
-    if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()){
-      moveCount++;
-      checkDirection(direction,newPos);
-    } else if (game.gameboard[newPos[0]][newPos[1]] === game.currentPlayer && moveCount > 0){
-      validDirections.push(direction);
-      return true;
-    } else {
-      return false;
+    function checkDirection(direction, startPoint) {//direction is a string (a valid key the obj)
+        var currentPos = startPoint.slice();
+        var newPos = [currentPos[0] + directions.direction[0], currentPos[1] + directions.direction[1]];
+        if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()) {
+            moveCount++;
+            checkDirection(direction, newPos);
+        } else if (game.gameboard[newPos[0]][newPos[1]] === game.currentPlayer && moveCount > 0) {
+            validDirections.push(direction);
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
 
-  function flipPieces(direction,startPoint){//direction is a string (from validDirections)
-    var currentPos = startingPosArr.slice();
-    var newPos = [currentPos[0]+directions.direction[0],currentPos[1]+directions.direction[1]];
-    if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()){
-      game.gameboard[newPos[0]][newPos[1]] = game.currentPlayer;
-      piecesFlipped++;
-      flipPieces(direction,newPos);
-  }
+    function flipPieces(direction, startPoint) {//direction is a string (from validDirections)
+        var currentPos = startingPosArr.slice();
+        var newPos = [currentPos[0] + directions.direction[0], currentPos[1] + directions.direction[1]];
+        if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()) {
+            game.gameboard[newPos[0]][newPos[1]] = game.currentPlayer;
+            piecesFlipped++;
+            flipPieces(direction, newPos);
+        }
 
-  //does a tree search for all possible pieces affected by move
-  //update the game objects gameboard
-  game.updateScore(piecesFlipped);
-  updateDisplay();
+        //does a tree search for all possible pieces affected by move
+        //update the game objects gameboard
+        game.updateScore(piecesFlipped);
+        updateDisplay();
+    }
 }
