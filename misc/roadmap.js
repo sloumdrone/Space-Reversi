@@ -84,7 +84,6 @@ function checkIfMoveIsLegal(arr) {
     var lastTurn = game.getOpponentName();
     if (game.gameboard[rowPosition][colPosition] === 'e') {
         if (arr[rowPosition - 1, colPosition - 1] === lastTurn || arr[rowPosition - 1, colPosition] === lastTurn || arr[rowPosition - 1, colPosition + 1] === lastTurn || arr[rowPosition, colPosition - 1] === lastTurn || arr[rowPosition, colPosition + 1] === lastTurn || arr[rowPosition + 1, colPosition - 1] === lastTurn || arr[rowPosition +1, colPosition] === lastTurn || arr[rowPosition+1, colPosition + 1] === lastTurn ){
-          return arr;
         }
 
         //on click, checks to see if the move is valid
