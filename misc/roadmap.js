@@ -101,11 +101,21 @@ function getOpponentName(){
 }
 
 function handleBoardClick(){
-  // This should get the row and col from the element that was clicked
+  var rowAttr = $(this).attr('row');
+  var colAttr = $(this).attr('col');
+  var clickedPos = [Number(rowAttr), Number(colAttr)];
+  handleMove(clickedPos);
+
+
+
+
+    // This should get the row and col from the element that was clicked
   // It should then call handle move with an array of those elements
 }
 
 function handleMove(startingPosArr){
+  debugger;
+  console.log('we handle this!!!!');
   var piecesFlipped = null;
   var directions = {//col then row
     'w': [0,-1],
@@ -130,7 +140,7 @@ function handleMove(startingPosArr){
     if (validDirections.length > 0){
       //add player's piece to board here
       for (var i = 0; i < validDirections.length; i++){
-        flipPieces(directions.validDirections[i],startingPosArr);
+        flipPieces(validDirections[i],startingPosArr);
       }
       game.gameboard[startingPosArr[0]][startingPosArr[1]] = game.currentPlayer;
       game.currentPlayer = game.getOpponentName();
@@ -149,8 +159,10 @@ function handleMove(startingPosArr){
 
   function checkDirection(direction,startPoint){//direction is a string (a valid key the obj)
     var currentPos = startPoint.slice();
-    var newPos = [currentPos[0]+directions.direction[0],currentPos[1]+directions.direction[1]];
-    if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()){
+    var newPos = [currentPos[0]+directions[direction][0],currentPos[1]+directions[direction][1]];
+      console.log(newPos);
+
+      if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()){
       moveCount++;
       checkDirection(direction,newPos);
     } else if (game.gameboard[newPos[0]][newPos[1]] === game.currentPlayer && moveCount > 0){
@@ -163,7 +175,7 @@ function handleMove(startingPosArr){
 
   function flipPieces(direction,startPoint){//direction is a string (from validDirections)
     var currentPos = startingPosArr.slice();
-    var newPos = [currentPos[0]+directions.direction[0],currentPos[1]+directions.direction[1]];
+    var newPos = [currentPos[0]+directions[direction][0],currentPos[1]+directions[direction][1]];
     if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()){
       game.gameboard[newPos[0]][newPos[1]] = game.currentPlayer;
       piecesFlipped++;
