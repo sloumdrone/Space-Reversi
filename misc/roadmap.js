@@ -41,6 +41,7 @@ $(document).ready(function(){
   //we can either put click handlers here or link to an initialize function
   //for the board, I think we should use delegated click handlers based in a container obj
   var game = new Game();
+  $('.container div.square').on('click',checkIfMoveIsLegal);
 });
 
 
@@ -63,6 +64,7 @@ function checkWinState(){
 }
 
 function checkIfMoveIsLegal(){
+  console.log("Checking if Move is Legal");
   //on click, checks to see if the move is valid
 }
 
