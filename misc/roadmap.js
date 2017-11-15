@@ -88,7 +88,7 @@ function getOpponentName(){
   return game.currentPlayer === 'b' ? 'w' : 'b';
 }
 
-function handleLegalMove(startingPosArr){
+function handleMove(startingPosArr){
   var piecesFlipped = null;
   var directions = {//col then row
     'w': [0,-1],
@@ -104,14 +104,27 @@ function handleLegalMove(startingPosArr){
   var validDirections = [];
   var moveCount = 0;
 
-  for (item in directions){
-    checkDirection(item,startingPosArr);
-    moveCount = 0;
+  if (game.gameboard[startingPosArr[0]][startingPosArr[1]]){
+    for (item in directions){
+      checkDirection(item,startingPosArr);
+      moveCount = 0;
+    }
+
+    if (validDirections.length > 0){
+      //add player's piece to board here
+      for (var i = 0; i < validDirections.length; i++){
+        flipPieces(directions.validDirections[i],startingPosArr);
+      }
+      return true
+    } else {
+      return false;
+    }
+  } else {
+    return false;
   }
 
-  for (var i = 0; i < validDirections.length; i++){
-    flipPieces(directions.validDirections[i],startingPosArr);
-  }
+
+
 
   function checkDirection(direction,startPoint){//direction is a string (a valid key the obj)
     var currentPos = startPoint.slice();
