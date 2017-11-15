@@ -2,7 +2,7 @@ $(document).ready(function(){
     //we can either put click handlers here or link to an initialize function
     //for the board, I think we should use delegated click handlers based in a container obj
     game = new Game();
-    $('.container').on('click','div.square', checkIfMoveIsLegal);
+    // $('.container').on('click','div.square', checkIfMoveIsLegal);
     buildBoard();
 });
 
@@ -54,28 +54,29 @@ function resetGame(){
   game = new Game()
 }
 
-function buildBoard(){
-  $('.container').empty();
-  var createRow= $('<div>').addClass('row');
-  for(var i=0; i<8;i++){
-    $('.container').append(createRow);
-      for(var j=0; j<8; j++){
-          var blackPiece= $('<div>').addClass('black');
-          var whitePiece= $('<div>').addClass('white');
-          var createColumn= $('<div>',{
-              class:'square',
-              attr: {
-                  row: i,
-                  col: j}
-          });
-          $('.row:last-child').append(createColumn);
-          if(game.gameboard[i][j]==='b'){
-            $('.row:last-child .square:last-child').append(blackPiece);
-          }else if(game.gameboard[i][j]==='w'){
-              $('.row:last-child .square:last-child').append(whitePiece);
-          }
-      }
-  }
+function buildBoard() {
+    $('.container').empty();
+    var createRow = $('<div>').addClass('row');
+    for (var i = 0; i < 8; i++) {
+        $('.container').append(createRow);
+        for (var j = 0; j < 8; j++) {
+            var blackPiece = $('<div>').addClass('black');
+            var whitePiece = $('<div>').addClass('white');
+            var createColumn = $('<div>', {
+                class: 'square',
+                attr: {
+                    row: i,
+                    col: j
+                }
+            });
+            $('.row:last-child').append(createColumn);
+            if (game.gameboard[i][j] === 'b') {
+                $('.row:last-child .square:last-child').append(blackPiece);
+            } else if (game.gameboard[i][j] === 'w') {
+                $('.row:last-child .square:last-child').append(whitePiece);
+            }
+        }
+    }
   // if($('div.square').attr('row','3').attr('col','3')) {
   //     $('div.square').append(blackPiece);
   // }
@@ -94,19 +95,19 @@ function checkWinState(){
   //this can maybe be accomplished purely based on turn number
 }
 
-function checkIfMoveIsLegal(arr) {
-    //console.log("Checking if Move is Legal")
-    var rowPosition = arr[0];
-    var colPosition = arr[1];
-    // var currentTurn =  game.currentPlayer;
-    var lastTurn = game.getOpponentName();
-    if (game.gameboard[rowPosition][colPosition] === 'e') {
-        if (arr[rowPosition - 1, colPosition - 1] === lastTurn || arr[rowPosition - 1, colPosition] === lastTurn || arr[rowPosition - 1, colPosition + 1] === lastTurn || arr[rowPosition, colPosition - 1] === lastTurn || arr[rowPosition, colPosition + 1] === lastTurn || arr[rowPosition + 1, colPosition - 1] === lastTurn || arr[rowPosition +1, colPosition] === lastTurn || arr[rowPosition+1, colPosition + 1] === lastTurn ){
-        }
-
-        //on click, checks to see if the move is valid
-            }
-}
+// function checkIfMoveIsLegal(arr) {
+//     //console.log("Checking if Move is Legal")
+//     var rowPosition = arr[0];
+//     var colPosition = arr[1];
+//     // var currentTurn =  game.currentPlayer;
+//     var lastTurn = game.getOpponentName();
+//     if (game.gameboard[rowPosition][colPosition] === 'e') {
+//         if (arr[rowPosition - 1, colPosition - 1] === lastTurn || arr[rowPosition - 1, colPosition] === lastTurn || arr[rowPosition - 1, colPosition + 1] === lastTurn || arr[rowPosition, colPosition - 1] === lastTurn || arr[rowPosition, colPosition + 1] === lastTurn || arr[rowPosition + 1, colPosition - 1] === lastTurn || arr[rowPosition +1, colPosition] === lastTurn || arr[rowPosition+1, colPosition + 1] === lastTurn ){
+//         }
+//
+//         //on click, checks to see if the move is valid
+//             }
+// }
 
 function getOpponentName(){
   return game.currentPlayer === 'b' ? 'w' : 'b';
@@ -165,16 +166,16 @@ function handleMove(startingPosArr){
   }
 
   function flipPieces(direction,startPoint){//direction is a string (from validDirections)
-    var currentPos = startingPosArr.slice();
-    var newPos = [currentPos[0]+directions.direction[0],currentPos[1]+directions.direction[1]];
-    if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()){
-      game.gameboard[newPos[0]][newPos[1]] = game.currentPlayer;
-      piecesFlipped++;
-      flipPieces(direction,newPos);
-  }
+      var currentPos = startingPosArr.slice();
+      var newPos = [currentPos[0] + directions.direction[0], currentPos[1] + directions.direction[1]];
+      if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()) {
+          game.gameboard[newPos[0]][newPos[1]] = game.currentPlayer;
+          piecesFlipped++;
+          flipPieces(direction, newPos);
+      }
 
-  //does a tree search for all possible pieces affected by move
-  //update the game objects gameboard
-  game.updateScore(piecesFlipped);
-  updateDisplay();
-}
+      //does a tree search for all possible pieces affected by move
+      //update the game objects gameboard
+      game.updateScore(piecesFlipped);
+      updateDisplay();
+  }
