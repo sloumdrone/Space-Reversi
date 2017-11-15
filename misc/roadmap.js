@@ -1,9 +1,9 @@
 $(document).ready(function(){
-    //we can either put click handlers here or link to an initialize function
-    //for the board, I think we should use delegated click handlers based in a container obj
-    game = new Game();
-    $('.container').on('click','div.square', checkIfMoveIsLegal);
-    buildBoard();
+  //we can either put click handlers here or link to an initialize function
+  //for the board, I think we should use delegated click handlers based in a container obj
+  game = new Game();
+  $('.container').on('click','div.square', checkIfMoveIsLegal);
+  buildBoard();
 });
 
 var game;
@@ -59,24 +59,25 @@ function buildBoard(){
   var createRow= $('<div>').addClass('row');
   for(var i=0; i<8;i++){
     $('.container').append(createRow);
-      for(var j=0; j<8; j++){
-          var blackPiece= $('<div>').addClass('black');
-          var whitePiece= $('<div>').addClass('white');
-          var createColumn= $('<div>',{
-              class:'square',
-              attr: {
-                  row: i,
-                  col: j}
-          });
-          $('.row:last-child').append(createColumn);
-          if(game.gameboard[i][j]==='b'){
-            $('.row:last-child .square:last-child').append(blackPiece);
-          }else if(game.gameboard[i][j]==='w'){
-              $('.row:last-child .square:last-child').append(whitePiece);
-          }
+    for(var j=0; j<8; j++){
+      var blackPiece= $('<div>').addClass('black');
+      var whitePiece= $('<div>').addClass('white');
+      var createColumn= $('<div>',{
+        class:'square',
+        attr: {
+          row: i,
+          col: j}
+        });
+      $('.row:last-child').append(createColumn);
+      if(game.gameboard[i][j]==='b'){
+        $('.row:last-child .square:last-child').append(blackPiece);
+      }else if(game.gameboard[i][j]==='w'){
+        $('.row:last-child .square:last-child').append(whitePiece);
       }
+    }
   }
 }
+
 
 
 function updateDisplay(){
@@ -147,18 +148,20 @@ function handleMove(startingPosArr) {
         }
     }
 
-    function flipPieces(direction, startPoint) {//direction is a string (from validDirections)
-        var currentPos = startingPosArr.slice();
-        var newPos = [currentPos[0] + directions.direction[0], currentPos[1] + directions.direction[1]];
-        if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()) {
-            game.gameboard[newPos[0]][newPos[1]] = game.currentPlayer;
-            piecesFlipped++;
-            flipPieces(direction, newPos);
-        }
 
-        //does a tree search for all possible pieces affected by move
-        //update the game objects gameboard
-        game.updateScore(piecesFlipped);
-        updateDisplay();
+
+  function flipPieces(direction,startPoint){//direction is a string (from validDirections)
+    var currentPos = startingPosArr.slice();
+    var newPos = [currentPos[0]+directions.direction[0],currentPos[1]+directions.direction[1]];
+    if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()){
+      game.gameboard[newPos[0]][newPos[1]] = game.currentPlayer;
+      piecesFlipped++;
+      flipPieces(direction,newPos);
     }
+
+    //does a tree search for all possible pieces affected by move
+    //update the game objects gameboard
+    game.updateScore(piecesFlipped);
+    updateDisplay();
+  }
 }
