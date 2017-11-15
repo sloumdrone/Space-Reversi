@@ -9,15 +9,16 @@
     width:100%;
     height:80vh;
     border: 1px solid black;
+    padding: 5vmin;
 }
 
 .container{
-    width: 50vh;
-    height:50vh;
+    width: 50vmin;
+    height:50vmin;
     border: 1px solid black;
     top:50%;
     left:50%;
-    transform: translate(10%, 10%);
+    margin: 0 auto;
 
 }
 .row{
@@ -27,9 +28,6 @@
     display: block;
     margin:0;
     padding:0;
-
-
-
 }
 
 .square{
@@ -38,7 +36,39 @@
     border: 1px solid black;
     float: left;
     display: inline-block;
+}
 
+.score-container {
+  display: block;
+  width: 50vmin;
+  height: 10vmin;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+
+.whitescore, .blackscore {
+  width: 50%;
+  height: 100%;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  line-height: 100%;
+  font-size: 1.5rem;
+}
+
+.whitescore {
+  color: black;
+  background-color: white;
+}
+
+.blackscore {
+  color: white;
+  background-color: black;
+}
+
+html, body {
+  margin: 0;
 }
 
 body *{
