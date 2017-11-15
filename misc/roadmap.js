@@ -2,7 +2,7 @@ $(document).ready(function(){
   //we can either put click handlers here or link to an initialize function
   //for the board, I think we should use delegated click handlers based in a container obj
   game = new Game();
-  $('.container').on('click','div.square', checkIfMoveIsLegal);
+  $('.container').on('click','div.square', handleBoardClick);
   buildBoard();
 });
 
@@ -55,6 +55,8 @@ function resetGame(){
 }
 
 function buildBoard(){
+  $('.whitescore').text(game.score.w);
+  $('.blackscore').text(game.score.b);
   $('.container').empty();
   var createRow= $('<div>').addClass('row');
   for(var i=0; i<8;i++){
@@ -98,6 +100,11 @@ function getOpponentName(){
   return game.currentPlayer === 'b' ? 'w' : 'b';
 }
 
+function handleBoardClick(){
+  // This should get the row and col from the element that was clicked
+  // It should then call handle move with an array of those elements
+}
+
 function handleMove(startingPosArr){
   var piecesFlipped = null;
   var directions = {//col then row
@@ -114,7 +121,7 @@ function handleMove(startingPosArr){
   var validDirections = [];
   var moveCount = 0;
 
-  if (game.gameboard[startingPosArr[0]][startingPosArr[1]]){
+  if (game.gameboard[startingPosArr[0]][startingPosArr[1]] === 'e'){
     for (item in directions){
       checkDirection(item,startingPosArr);
       moveCount = 0;
@@ -125,6 +132,10 @@ function handleMove(startingPosArr){
       for (var i = 0; i < validDirections.length; i++){
         flipPieces(directions.validDirections[i],startingPosArr);
       }
+      game.gameboard[startingPosArr[0]][startingPosArr[1]] = game.currentPlayer;
+      game.currentPlayer = game.getOpponentName();
+      game.updateScore(piecesFlipped);
+      updateDisplay();
       return true
     } else {
       return false;
@@ -158,10 +169,5 @@ function handleMove(startingPosArr){
       piecesFlipped++;
       flipPieces(direction,newPos);
     }
-
-    //does a tree search for all possible pieces affected by move
-    //update the game objects gameboard
-    game.updateScore(piecesFlipped);
-    updateDisplay();
   }
 }
