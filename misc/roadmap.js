@@ -61,8 +61,14 @@ function checkWinState(){
   //this can maybe be accomplished purely based on turn number
 }
 
-function checkIfMoveIsLegal(){
-  console.log("Checking if Move is Legal");
+function checkIfMoveIsLegal(xArr, yArr){
+  //console.log("Checking if Move is Legal")
+  var xPosition = xArr.indexOf($(this));
+  var yPosition = yArr.indexOf($(this));
+  var currentTurn =  game.currentPlayer;
+  var lastTurn = game.getOpponentName();
+  if()
+
   //on click, checks to see if the move is valid
 }
 
