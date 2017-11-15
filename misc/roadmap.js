@@ -49,6 +49,21 @@ function resetGame(){
 }
 
 function buildBoard(){
+  var createRow= $('<div>').addClass('row');
+
+  for(var i=0; i<8;i++){
+    $('.container').append(createRow);
+      for(var j=0; j<8; j++){
+          var createColumn= $('<div>',{
+              class:'square',
+              attr: {
+                  row: j,
+                  col: j}
+          });
+        $('.row:last-child').append(createColumn);
+      }
+  }
+  console.log(createColumn,createRow);
   //this is the dom creation of the board, maybe make part of Game object
 }
 
