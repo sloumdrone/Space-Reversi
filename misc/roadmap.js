@@ -1,9 +1,12 @@
 $(document).ready(function(){
     //we can either put click handlers here or link to an initialize function
     //for the board, I think we should use delegated click handlers based in a container obj
-    var game = new Game();
+    game = new Game();
     $('.container').on('click','div.square', checkIfMoveIsLegal);
+    buildBoard();
 });
+
+var game;
 function Game(){
   //this creates an object that serves as the model for the Game
   //it will hold all position and statistical information
@@ -22,7 +25,7 @@ function Game(){
     ['e','e','e','w','b','e','e','e'],
     ['e','e','e','e','e','e','e','e'],
     ['e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e']
   ];
   this.score = {
     'black': 2,
@@ -49,23 +52,35 @@ function resetGame(){
 }
 
 function buildBoard(){
+  $('.container').empty();
   var createRow= $('<div>').addClass('row');
-
   for(var i=0; i<8;i++){
     $('.container').append(createRow);
       for(var j=0; j<8; j++){
+          var blackPiece= $('<div>').addClass('black');
+          var whitePiece= $('<div>').addClass('white');
           var createColumn= $('<div>',{
               class:'square',
               attr: {
-                  row: j,
+                  row: i,
                   col: j}
           });
-        $('.row:last-child').append(createColumn);
+          $('.row:last-child').append(createColumn);
+          if(game.gameboard[i][j]==='b'){
+            $('.row:last-child .square:last-child').append(blackPiece);
+          }else if(game.gameboard[i][j]==='w'){
+              $('.row:last-child .square:last-child').append(whitePiece);
+          }
       }
   }
-  console.log(createColumn,createRow);
+  // if($('div.square').attr('row','3').attr('col','3')) {
+  //     $('div.square').append(blackPiece);
+  // }
+
+
   //this is the dom creation of the board, maybe make part of Game object
 }
+
 
 function updateDisplay(){
   //Update the board position and points in the display
