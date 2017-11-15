@@ -1,5 +1,5 @@
 # c10.17hacka-thello-thon
-Scope: 
+Scope:
 - Make an othello game
   - basic rule description: http://www.hannu.se/games/othello/rules.htm
   - at least 2 players
@@ -8,10 +8,10 @@ Scope:
   - one player should be able to win (by having the most squares)
 - Additional requirements:
   - Must be able to flip the tokens based upon square placement
-  - players must be able to choose which symbol they use.
- 
- 
-Mystery requirement: 
+  - players must be able to choose which symbol they use. 
+
+
+Mystery requirement:
 - <b>COMING SOON!</b>
 
 ### Teams
