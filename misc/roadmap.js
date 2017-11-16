@@ -52,14 +52,14 @@ function Game(){
   ];
 
   this.directions = {//col then row
-      'w': [0, -1],
+      'w' : [ 0, -1],
       'nw': [-1, -1],
-      'n': [-1, 0],
-      'ne': [-1, 1],
-      'e': [0, 1],
-      'se': [1, 1],
-      's': [1, 0],
-      'sw': [1, -1]
+      'n' : [-1,  0],
+      'ne': [-1,  1],
+      'e' : [ 0,  1],
+      'se': [ 1,  1],
+      's' : [ 1,  0],
+      'sw': [ 1, -1]
   };
 
   this.score = {
@@ -70,11 +70,13 @@ function Game(){
   this.updateScore = function(amount){
     this.score[this.currentPlayer] += amount + 1;
     this.score[this.getOpponentName()] -= amount;
+    this.turn++;
   },
 
   this.checkForGameOver = function(){
     if (this.turn > 60){
       this.playing = false;
+      checkWinState();
     }
   },
 
@@ -170,7 +172,7 @@ function checkWinState(){
     console.log('win');
     $('.modal').css('display', 'block');
   }
-  var modalAway = $('div.modal-content');
+
   $(window).click(function() {
     if (event.target.className === 'modal-content') {
       return;
@@ -304,6 +306,7 @@ function passBtn() {
         game.currentPlayer = 'w'
     }
     updateDisplay();
+    game.turn++;
 }
 
 
