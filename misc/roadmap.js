@@ -22,8 +22,12 @@ $(document).ready(function(){
   //for the board, I think we should use delegated click handlers based in a container obj
 
   game = new Game();
+  $('.hamburger').on('click',hamburgerMenu);
+  $('.reset-game').on('click',resetGame);
   $('.container').on('click','div.square', handleBoardClick);
-  buildBoard();
+    $('.turn#firstPlayer').toggleClass('thingy');
+
+    buildBoard();
 });
 
 var game;
@@ -35,6 +39,7 @@ function Game(){
   this.currentPlayer = 'b';
   this.turn = 1;
   this.winner = null;
+  this.menuOut = false;
 
   //'e'=empty, 'w'=white, 'b'=black, 'l'=legal
   this.gameboard = [
@@ -71,14 +76,32 @@ function Game(){
 
 function resetGame(){
   //this will reset the game board
-  game = new Game()
+  $('.hamburger').css({'transform':'rotateZ(0deg)','right':'2vw'});
+  $('.slider-menu').css({'right':'-20vw'});
+  game.menuOut = false;
+  game = new Game();
+  buildBoard();
 }
 
 
 function buildBoard(){
-  $('.header').text(game.currentPlayer);
-  $('.whitescore').text('Sun: '+ game.score.w);
-  $('.blackscore').text('Moon: '+ game.score.b);
+    $('.turn#firstPlayer').text('Points : ' + game.score.w);
+    $('.turn#secondPlayer').text('Points : ' + game.score.b);
+    $('.turn#firstPlayer').toggleClass('thingy');
+    $('.turn#secondPlayer').toggleClass('thingy2');
+
+
+
+
+    // if(game.currentPlayer === 'b') {
+    //     $('#firstPlayer').text('Your Turn');
+    // }else if(game.currentPlayer === 'w'){
+    //     $('#secondPlayer').text('Your Turn');
+    //
+    // }
+  // $('.whitescore').text(game.score.w);
+  // $('.blackscore').text(game.score.b);
+
   $('.container').empty();
   // var createRow= $('<div>').addClass('row');
   for(var i=0; i<8;i++) {
@@ -104,6 +127,19 @@ function buildBoard(){
 
       //this is the dom creation of the board, maybe make part of Game object
   }
+}
+
+function hamburgerMenu(){
+  if (!game.menuOut){
+    $(this).css({'transform':'rotateZ(90deg)','right':'22vw'});
+    $('.slider-menu').css({'right':'0'});
+    game.menuOut = true;
+  } else {
+    $(this).css({'transform':'rotateZ(0deg)','right':'2vw'});
+    $('.slider-menu').css({'right':'-20vw'});
+    game.menuOut = false;
+  }
+
 }
 
 
