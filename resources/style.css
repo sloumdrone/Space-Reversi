@@ -8,7 +8,8 @@ body {
     width:100%;
     height:10vh;
     border: 1px solid black;
-    background-color: #45d5e5;
+    background: #45d5e5;
+    background: linear-gradient( to right, #45d5e5, #66b257);
     opacity: 0.5;
 }
 
@@ -96,3 +97,4 @@ body *{
     background-image: url('./images/light-moon.jpg');
     background-size: cover;
 }
+
