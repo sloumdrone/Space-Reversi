@@ -9,7 +9,9 @@ $(document).ready(function(){
 
   game = new Game();
   $('.container').on('click','div.square', handleBoardClick);
-  buildBoard();
+    $('.turn#firstPlayer').toggleClass('thingy');
+
+    buildBoard();
 });
 
 var game;
@@ -62,14 +64,22 @@ function resetGame(){
 
 
 function buildBoard(){
-<<<<<<< HEAD
-    if(game.currentPlayer === 'b') {
-        $('.turn').text('Current Player : ');
-    }else if(game.currentPlayer === 'w'){
-        $('.turn').text('Current Player : ');
-    }
-  $('.whitescore').text(game.score.w);
-  $('.blackscore').text(game.score.b);
+    $('.turn#firstPlayer').text('Points : ' + game.score.w);
+    $('.turn#secondPlayer').text('Points : ' + game.score.b);
+    $('.turn#firstPlayer').toggleClass('thingy');
+    $('.turn#secondPlayer').toggleClass('thingy2');
+
+
+
+
+    // if(game.currentPlayer === 'b') {
+    //     $('#firstPlayer').text('Your Turn');
+    // }else if(game.currentPlayer === 'w'){
+    //     $('#secondPlayer').text('Your Turn');
+    //
+    // }
+  // $('.whitescore').text(game.score.w);
+  // $('.blackscore').text(game.score.b);
 
   $('.container').empty();
   // var createRow= $('<div>').addClass('row');

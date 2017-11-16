@@ -30,20 +30,70 @@ body {
 }
 
 .turn{
-    border: 1px solid white;
     position: absolute;
     float: left;
-    width: 20vmin;
-    height: 10vmin;
+    width: 20vh;
+    height: 10vh;
     font-size: 1.5rem;
     color: white;
     text-align: center;
-    top:35%;
-    left:10%;
+    border-radius: 1vmin;
     vertical-align:center;
     line-height:320%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+#firstPlayer{
+    top:35%;
+    left:10%;
+    border: 2px solid rgba(50,205,50, 0.45);
+}
+
+#secondPlayer{
+    top: 35%;
+    right:10%;
+    border: 2px solid rgba(255, 0, 128, 0.45);
 
 }
+
+.thingy {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        border: 1px solid rgba(50,205,50,1)
+    }
+
+    50% {
+        border: 1px solid rgba(50,205,50,0.3)
+    }
+
+    100% {
+        border: 1px solid rgba(50,205,50,1)
+    }
+
+}
+
+.thingy2 {
+    animation: pulse2 1s infinite;
+}
+
+@keyframes pulse2 {
+    0% {
+        border: 1px solid rgba(255,0,128,1)
+    }
+
+    50% {
+        border: 1px solid rgba(255,0,128,0.3)
+    }
+
+    100% {
+        border: 1px solid rgba(255,0,128,1)
+    }
+
+}
+
 
 .container{
     width: 60vmin;
@@ -75,35 +125,35 @@ body {
     background-color: rgba(0,0,0,0.6);
 }
 
-.score-container {
-  display: block;
-  width: 60vmin;
-  height: 5vmin;
-  margin: 0 auto 3vmin auto;
-  border: 1px solid black;
-  visibility: hidden;
-}
+/*.score-container {*/
+  /*display: block;*/
+  /*width: 60vmin;*/
+  /*height: 5vmin;*/
+  /*margin: 0 auto 3vmin auto;*/
+  /*border: 1px solid black;*/
+  /*visibility: hidden;*/
+/*}*/
 
-.whitescore, .blackscore {
-  width: 50%;
-  height: 100%;
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  line-height: 100%;
-  font-size: 1.5rem;
-}
+/*.whitescore, .blackscore {*/
+  /*width: 50%;*/
+  /*height: 100%;*/
+  /*display: inline-block;*/
+  /*margin: 0;*/
+  /*padding: 0;*/
+  /*text-align: center;*/
+  /*line-height: 100%;*/
+  /*font-size: 1.5rem;*/
+/*}*/
 
-.whitescore {
-  color: black;
-  background-color: white;
-}
+/*.whitescore {*/
+  /*color: black;*/
+  /*background-color: white;*/
+/*}*/
 
-.blackscore {
-  color: white;
-  background-color: black;
-}
+/*.blackscore {*/
+  /*color: white;*/
+  /*background-color: black;*/
+/*}*/
 
 html, body {
   margin: 0;
