@@ -234,6 +234,56 @@ body {
   color: rgba(200,200,200,1);
 }
 
+.toggle-title {
+  width: 100%;
+  text-align: center;
+  display: block;
+  font-size: 1rem;
+}
+
+#human, #ai {
+  width: 4vw;
+  height: 4vw;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+}
+
+#human {
+  background-image: url('./images/human.png');
+  background-position: 0% 10%;
+}
+
+#ai {
+  background-image: url('./images/ai.png');
+  background-position: 0% -10%;
+}
+
+.toggle-slider-body {
+  border: 2px solid rgba(200,200,200,0.8);
+  width: 6vw;
+  height: 3vw;
+  border-radius: 2vmin;
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 0.125vw;
+}
+
+.toggle-slider-disc {
+  float: right;
+  display: inline;
+  width: 2.5vw;
+  height: 2.5vw;
+  background-color: rgba(200,200,200,0.8);
+  border-radius: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  transition-duration: 1s;
+}
+
 /*.score-container {*/
   /*display: block;*/
   /*width: 60vmin;*/
