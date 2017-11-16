@@ -22,9 +22,9 @@ $(document).ready(function(){
   $('.container').on('click','div.square', handleBoardClick);
   $('.turn#firstPlayer').toggleClass('thingy');
   $('#secondPlayerPassDiv').toggleClass('passBtnClass');
-    $('.passBtn1').click(passBtn);
-    $('.passBtn2').click(passBtn);
-    buildBoard();
+  $('.passBtn1').click(passBtn);
+  $('.passBtn2').click(passBtn);
+  buildBoard();
 });
 
 var game;
@@ -38,6 +38,7 @@ function Game(){
   this.winner = null;
   this.menuOut = false;
   this.legalMoves = [];
+  this.mode = 'ai';
 
   //'e'=empty, 'w'=white, 'b'=black, 'l'=legal
   this.gameboard = [
@@ -87,6 +88,12 @@ function resetGame(){
   //this will reset the game board
   $('.hamburger').css({'transform':'rotateZ(0deg)','right':'2vw'});
   $('.slider-menu').css({'right':'-20vw'});
+  if (game.currentPlayer === 'b'){
+    $('.turn#firstPlayer').toggleClass('thingy');
+    $('.turn#secondPlayer').toggleClass('thingy2');
+    $('#firstPlayerPassDiv').toggleClass('passBtnClass');
+    $('#secondPlayerPassDiv').toggleClass('passBtnClass');
+  }
   game.menuOut = false;
   game = new Game();
   buildBoard();
@@ -238,6 +245,17 @@ function handleBoardClick(){
   // It should then call handle move with an array of those elements
 }
 
+
+function aiMove(){
+  console.log(game.legalMoves);
+  if (game.legalMoves.length > 0){
+    var randomMove = Math.floor(Math.random() * game.legalMoves.length);
+    handleMove(game.legalMoves[randomMove]);
+  } else {
+    $('.passBtn2').click();
+  }
+}
+
 function handleMove(startingPosArr) {
     var piecesFlipped = null;
     var validDirections = [];
@@ -259,6 +277,13 @@ function handleMove(startingPosArr) {
             game.updateScore(piecesFlipped);
             checkForLegalMoves();
             updateDisplay();
+            if (game.mode === 'ai' && game.currentPlayer === 'w'){
+              var timer = setTimeout(function(){
+                var randTime = Math.floor(Math.random() * 1500) + 1000;
+                aiMove();
+                clearTimeout(timer);
+              }, 1800);
+            }
             return true
         } else {
             return false;
