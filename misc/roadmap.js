@@ -24,6 +24,16 @@ $(document).ready(function(){
   $('#secondPlayerPassDiv').toggleClass('passBtnClass');
   $('.passBtn1').click(passBtn);
   $('.passBtn2').click(passBtn);
+  $('.toggle-slider-body').click(function(){
+    if (game.mode === 'ai'){
+      $('.toggle-slider-disc').css('float','left');
+      game.mode = 'human';
+      game.clickable = true;
+    } else {
+      $('.toggle-slider-disc').css('float','right');
+      game.mode = 'ai';
+    }
+  });
   buildBoard();
 });
 
@@ -39,6 +49,7 @@ function Game(){
   this.menuOut = false;
   this.legalMoves = [];
   this.mode = 'ai';
+  this.clickable = true;
 
   //'e'=empty, 'w'=white, 'b'=black, 'l'=legal
   this.gameboard = [
@@ -240,11 +251,9 @@ function handleBoardClick(){
   var rowAttr = $(this).attr('row');
   var colAttr = $(this).attr('col');
   var clickedPos = [Number(rowAttr), Number(colAttr)];
-  handleMove(clickedPos);
-
-
-    // This should get the row and col from the element that was clicked
-  // It should then call handle move with an array of those elements
+  if (game.clickable && game.playing){
+      handleMove(clickedPos);
+  }
 }
 
 
@@ -263,7 +272,9 @@ function handleMove(startingPosArr) {
     var validDirections = [];
     var moveCount = 0;
 
+
     if (game.gameboard[startingPosArr[0]][startingPosArr[1]] === 'e' || game.gameboard[startingPosArr[0]][startingPosArr[1]] === 'l') {
+        game.clickable = false;
         for (item in game.directions) {
             checkDirection(item, startingPosArr);
             moveCount = 0;
@@ -281,13 +292,19 @@ function handleMove(startingPosArr) {
             updateDisplay();
             if (game.mode === 'ai' && game.currentPlayer === 'w'){
               var timer = setTimeout(function(){
+                game.clickable = false;
                 var randTime = Math.floor(Math.random() * 1500) + 1000;
                 aiMove();
+                game.clickable = true;
                 clearTimeout(timer);
               }, 1800);
+
+            } else {
+              game.clickable = true;
             }
             return true
         } else {
+            game.clickable = true;
             return false;
         }
 
@@ -321,6 +338,7 @@ function handleMove(startingPosArr) {
             }
         }
     }
+
 }
 
 function passBtn() {
