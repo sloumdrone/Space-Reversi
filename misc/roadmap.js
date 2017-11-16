@@ -187,12 +187,12 @@ function checkWinState(){
     $('.modal').css('display', 'block');
   }
 
-  $(window).click(function() {
-    if (event.target.className === 'modal-content') {
-      return;
-    }
-    $('.modal').css('display', 'none');
-  });
+  // $(window).click(function() {
+  //   if (event.target.className === 'modal-content') {
+  //     return;
+  //   }
+  //   $('.modal').css('display', 'none');
+  // });
 }
 
 function checkForLegalMoves(){
