@@ -172,7 +172,7 @@ function checkWinState(){
   }
   var modalAway = $('div.modal-content');
   $(window).click(function() {
-    if (event.target.className === 'modal-content') {
+    if (event.target.className === 'modal') {
       return;
     }
     $('.modal').css('display', 'none');
