@@ -63,12 +63,12 @@ function resetGame(){
 
 function buildBoard(){
   $('.header').text(game.currentPlayer);
-  $('.whitescore').text(game.score.w);
-  $('.blackscore').text(game.score.b);
+  $('.whitescore').text('Sun: '+ game.score.w);
+  $('.blackscore').text('Moon: '+ game.score.b);
   $('.container').empty();
-  var createRow= $('<div>').addClass('row');
+  // var createRow= $('<div>').addClass('row');
   for(var i=0; i<8;i++) {
-      $('.container').append(createRow);
+      $('<div>').addClass('row').appendTo('.container');
       for (var j = 0; j < 8; j++) {
           var blackPiece = $('<div>').addClass('black');
           var whitePiece = $('<div>').addClass('white');
