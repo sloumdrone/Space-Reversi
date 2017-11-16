@@ -78,11 +78,13 @@ body *{
     height: 100%;
     width: 100%;
     border-radius: 50%;
-    background-color: black;
+    background-image: url('./images/dark-moon.jpg');
+    background-size: cover;
 }
 .white{
     height: 100%;
     width: 100%;
     border-radius: 50%;
-    border: 1px black solid;
+    background-image: url('./images/light-moon.jpg');
+    background-size: cover;
 }
