@@ -268,19 +268,27 @@ html, body {
 body *{
     box-sizing: border-box;
 }
-.black{
+.black {
     height: 100%;
     width: 100%;
     background-color: limegreen;
     border-radius: 1vmin;
     border: 2px solid rgba(240,240,240,0.3);
 }
-.white{
+.white {
   height: 100%;
   width: 100%;
   background-color: fuchsia;
   border-radius: 1vmin;
   border: 2px solid rgba(240,240,240,0.3);
+}
+
+.legalMove {
+  height: 100%;
+  width: 100%;
+  /*background-color: rgba(190,180,170,0.21);*/
+  border-radius: 1vmin;
+  border: 2px solid rgba(176, 193, 244, 0.8)
 }
 
 
@@ -297,7 +305,7 @@ body *{
     overflow: auto;
     background-color: rgba(163, 15, 126, 0.66);
   }
-  
+
   .modal-content {
     background-color: rgb(255, 255, 255);
     margin: auto;
@@ -306,14 +314,14 @@ body *{
     width: 40%;
     border-radius: 10px;
   }
-  
+
   .close {
     color: rgb(128,128,128);
     float: right;
     font-size: 30px;
     font-weight: bold;
   }
-  
+
   .close:hover,
   .close:focus {
     color: #000;

@@ -1,23 +1,10 @@
 $(document).ready(function(){
-    // $('button').click(function() {
-    //     console.log('butts');
-    //     $('.modal').css('display', 'block');
-    //   });
-    //
-    //   $('span').click(function() {
-    //     $('.modal').css('display', 'none');
-    //   });
-    //
-    //   $('window').click(function() {
-    //     if (event.target === modal) {
-    //       $('.modal').css('display', 'none');
-    //     }
-    //   });
+
     //we can either put click handlers here or link to an initialize function
     //for the board, I think we should use delegated click handlers based in a container obj
     game = new Game();
     // $('.container').on('click','div.square', checkIfMoveIsLegal);
-    buildBoard();
+    updateDisplay();
   //we can either put click handlers here or link to an initialize function
   //for the board, I think we should use delegated click handlers based in a container obj
 
@@ -42,6 +29,7 @@ function Game(){
   this.turn = 1;
   this.winner = null;
   this.menuOut = false;
+  this.legalMoves = [];
 
   //'e'=empty, 'w'=white, 'b'=black, 'l'=legal
   this.gameboard = [
@@ -54,6 +42,17 @@ function Game(){
     ['e','e','e','e','e','e','e','e'],
     ['e','e','e','e','e','e','e','e']
   ];
+
+  this.directions = {//col then row
+      'w': [0, -1],
+      'nw': [-1, -1],
+      'n': [-1, 0],
+      'ne': [-1, 1],
+      'e': [0, 1],
+      'se': [1, 1],
+      's': [1, 0],
+      'sw': [1, -1]
+  };
 
   this.score = {
     'b': 2,
@@ -113,6 +112,7 @@ function buildBoard(){
       for (var j = 0; j < 8; j++) {
           var blackPiece = $('<div>').addClass('black');
           var whitePiece = $('<div>').addClass('white');
+          var legalMove = $('<div>').addClass('legalMove');
           var createColumn = $('<div>', {
               class: 'square',
               attr: {
@@ -125,6 +125,8 @@ function buildBoard(){
               $('.row:last-child .square:last-child').append(blackPiece);
           } else if (game.gameboard[i][j] === 'w') {
               $('.row:last-child .square:last-child').append(whitePiece);
+          } else if (game.gameboard[i][j] === 'l') {
+              $('.row:last-child .square:last-child').append(legalMove);
           }
       }
 
@@ -149,6 +151,7 @@ function hamburgerMenu(){
 
 function updateDisplay() {
         //Update the board position and points in the display
+        checkForLegalMoves();
         buildBoard();
 }
 
@@ -157,9 +160,48 @@ function checkWinState(){
   //this can maybe be accomplished purely based on turn number
 }
 
-function checkIfMoveIsLegal(){
-  console.log("Checking if Move is Legal");
-  //on click, checks to see if the move is valid
+function checkForLegalMoves(){
+  game.legalMoves = [];
+  for(var i=0; i<8;i++) {
+    for (var j = 0; j < 8; j++) {
+      var validDirections = [];
+      var moveCount = 0;
+      var startingPos = [i,j];
+
+      if (game.gameboard[startingPos[0]][startingPos[1]] === 'e' || game.gameboard[startingPos[0]][startingPos[1]] === 'l') {
+        for (item in game.directions) {
+          checkDirection(item, startingPos);
+          moveCount = 0;
+        }
+        if (validDirections.length > 0){
+          game.legalMoves.push(startingPos);
+          game.gameboard[i][j] = 'l'
+        } else {
+          game.gameboard[i][j] = 'e'
+        }
+      }
+
+    }
+  }
+
+
+  function checkDirection(direction, startPoint) {//direction is a string (a valid key the obj)
+      var currentPos = startPoint.slice();
+      var newPos = [currentPos[0] + game.directions[direction][0], currentPos[1] + game.directions[direction][1]];
+      if (newPos[0] < 8 && newPos[1] < 8 && newPos[0] >= 0 && newPos[1] >= 0){
+        if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()) {
+            moveCount++;
+            checkDirection(direction, newPos);
+        } else if (game.gameboard[newPos[0]][newPos[1]] === game.currentPlayer && moveCount > 0) {
+            validDirections.push(direction);
+            return true;
+        } else {
+            return false;
+
+        }
+      }
+
+  }
 }
 
 function getOpponentName(){
@@ -178,24 +220,12 @@ function handleBoardClick(){
 }
 
 function handleMove(startingPosArr) {
-    console.log('we handle this!!!!');
     var piecesFlipped = null;
-    var directions = {//col then row
-        'w': [0, -1],
-        'nw': [-1, -1],
-        'n': [-1, 0],
-        'ne': [-1, 1],
-        'e': [0, 1],
-        'se': [1, 1],
-        's': [1, 0],
-        'sw': [1, -1]
-    };
-
     var validDirections = [];
     var moveCount = 0;
 
-    if (game.gameboard[startingPosArr[0]][startingPosArr[1]] === 'e') {
-        for (item in directions) {
+    if (game.gameboard[startingPosArr[0]][startingPosArr[1]] === 'e' || game.gameboard[startingPosArr[0]][startingPosArr[1]] === 'l') {
+        for (item in game.directions) {
             checkDirection(item, startingPosArr);
             moveCount = 0;
         }
@@ -208,6 +238,7 @@ function handleMove(startingPosArr) {
             game.gameboard[startingPosArr[0]][startingPosArr[1]] = game.currentPlayer;
             game.currentPlayer = game.getOpponentName();
             game.updateScore(piecesFlipped);
+            checkForLegalMoves();
             updateDisplay();
             return true
         } else {
@@ -216,8 +247,7 @@ function handleMove(startingPosArr) {
 
         function checkDirection(direction, startPoint) {//direction is a string (a valid key the obj)
             var currentPos = startPoint.slice();
-            var newPos = [currentPos[0] + directions[direction][0], currentPos[1] + directions[direction][1]];
-            console.log(newPos);
+            var newPos = [currentPos[0] + game.directions[direction][0], currentPos[1] + game.directions[direction][1]];
             if (newPos[0] < 8 && newPos[1] < 8 && newPos[0] >= 0 && newPos[1] >= 0){
               if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()) {
                   moveCount++;
@@ -236,7 +266,7 @@ function handleMove(startingPosArr) {
 
         function flipPieces(direction, startPoint) {//direction is a string (from validDirections)
             var currentPos = startPoint.slice();
-            var newPos = [currentPos[0] + directions[direction][0], currentPos[1] + directions[direction][1]];
+            var newPos = [currentPos[0] + game.directions[direction][0], currentPos[1] + game.directions[direction][1]];
             if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()) {
                 game.gameboard[newPos[0]][newPos[1]] = game.currentPlayer;
                 piecesFlipped++;
@@ -262,7 +292,6 @@ function passBtn() {
 
 
 // function checkIfMoveIsLegal(arr) {
-//     //console.log("Checking if Move is Legal")
 //     var rowPosition = arr[0];
 //     var colPosition = arr[1];
 //     // var currentTurn =  game.currentPlayer;
@@ -272,7 +301,3 @@ function passBtn() {
 //         }
 //
 //         //on click, checks to see if the move is valid
-
-
-
-
