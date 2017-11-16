@@ -5,7 +5,7 @@ body {
 
 .header {
     width: 100vw;
-    height:17vh;
+    height:21vh;
     /*border: 1px solid black;*/
     /*background-color: #45d5e5;*/
     /*opacity: 0.5;*/
@@ -17,7 +17,7 @@ body {
 
 .header img {
   position: absolute;
-  width: 35vw;
+  height: 21vh;
   transform: translate(-50%,-0%);
   top: 0%;
   left: 50%;
@@ -36,10 +36,11 @@ body {
 
 
 .mainContent{
-    width:100%;
-    height:85vh;
+    width:100vw;
+    height:79vh;
     /*border: 1px solid black;*/
     padding: 5vmin;
+    margin: 0;
 }
 
 .turn{
@@ -188,6 +189,7 @@ body {
   width: 4vmin;
   height: 3.5vmin;
   transition-duration: 1s;
+  z-index: 5;
 }
 
 .hamburger:hover {
@@ -215,6 +217,7 @@ body {
   right: -20vw;
   background: linear-gradient(to bottom left, black, transparent);
   transition-duration: 1s;
+  z-index: 5;
 }
 
 .slide-item {
