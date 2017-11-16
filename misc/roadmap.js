@@ -1,18 +1,13 @@
 $(document).ready(function(){
-    $('button').click(function() {
-        console.log('butts');
-        $('.modal').css('display', 'block');
-      });
-      
       $('span').click(function() {
         $('.modal').css('display', 'none');
       });
-      
-      $('window').click(function() {
-        if (event.target === modal) {
-          $('.modal').css('display', 'none');
-        }
-      });
+
+    //   $('window').click(function() {
+    //     if (event.target === modal) {
+    //       $('.modal').css('display', 'none');
+    //     }
+    //   });
     //we can either put click handlers here or link to an initialize function
     //for the board, I think we should use delegated click handlers based in a container obj
     game = new Game();
@@ -151,6 +146,17 @@ function updateDisplay() {
 function checkWinState(){
   //determine if a win state has been reached
   //this can maybe be accomplished purely based on turn number
+  if (true) {
+    console.log('win');
+    $('.modal').css('display', 'block');
+  }
+  var modalAway = $('div.modal-content');
+  $(window).click(function() {
+    if (event.target.className === 'modal-content') {
+      return;
+    }
+    $('.modal').css('display', 'none');
+  });
 }
 
 function checkIfMoveIsLegal(){
