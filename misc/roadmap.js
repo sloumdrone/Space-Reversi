@@ -38,6 +38,8 @@ function Game(){
   this.winner = null;
   this.menuOut = false;
   this.legalMoves = [];
+  this.passBtnCounter = 0;
+  this.passBtnFlag = true;
 
   //'e'=empty, 'w'=white, 'b'=black, 'l'=legal
   this.gameboard = [
@@ -298,13 +300,28 @@ function handleMove(startingPosArr) {
 
 function passBtn() {
     console.log('ha');
-    var passBtnCounter = 0;
-    if(game.currentPlayer === 'w'){
-        game.currentPlayer = 'b'
+    if(game.passBtnCounter !== 2) {
+        if (game.currentPlayer === 'w') {
+            game.currentPlayer = 'b';
+            game.passBtnCounter++;
+            game.passBtnFlag = false;
+        } else {
+            game.currentPlayer = 'w';
+            game.passBtnCounter++;
+            game.passBtnFlag = false;
+        }
     }else{
-        game.currentPlayer = 'w'
+        //end the game
     }
     updateDisplay();
+}
+
+
+var clickCounter=0;
+function checkSameRound() {
+    if(game.passBtnFlag === false && clickCounter !== 0){
+        //end the game
+    }
 }
 
 
