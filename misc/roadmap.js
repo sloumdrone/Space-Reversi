@@ -152,8 +152,8 @@ function handleMove(startingPosArr) {
                 flipPieces(validDirections[i], startingPosArr);
             }
             game.gameboard[startingPosArr[0]][startingPosArr[1]] = game.currentPlayer;
-            game.currentPlayer = game.getOpponentName();
             game.updateScore(piecesFlipped);
+            game.currentPlayer = game.getOpponentName();
             updateDisplay();
             return true
         } else {
@@ -179,7 +179,6 @@ function handleMove(startingPosArr) {
 
         }
 
-
         function flipPieces(direction, startPoint) {//direction is a string (from validDirections)
             var currentPos = startPoint.slice();
             var newPos = [currentPos[0] + directions[direction][0], currentPos[1] + directions[direction][1]];
@@ -192,11 +191,6 @@ function handleMove(startingPosArr) {
         }
     }
 }
-
-
-
-
-
 // function checkIfMoveIsLegal(arr) {
 //     //console.log("Checking if Move is Legal")
 //     var rowPosition = arr[0];
