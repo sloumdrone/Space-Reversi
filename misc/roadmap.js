@@ -22,9 +22,9 @@ $(document).ready(function(){
   $('.container').on('click','div.square', handleBoardClick);
   $('.turn#firstPlayer').toggleClass('thingy');
   $('#secondPlayerPassDiv').toggleClass('passBtnClass');
-    $('.passBtn1').click(passBtn);
-    $('.passBtn2').click(passBtn);
-    buildBoard();
+  $('.passBtn1').click(passBtn);
+  $('.passBtn2').click(passBtn);
+  buildBoard();
 });
 
 var game;
@@ -40,6 +40,7 @@ function Game(){
   this.legalMoves = [];
   this.passBtnCounter = 0;
   this.passBtnFlag = true;
+  this.mode = 'ai';
 
   //'e'=empty, 'w'=white, 'b'=black, 'l'=legal
   this.gameboard = [
@@ -54,14 +55,14 @@ function Game(){
   ];
 
   this.directions = {//col then row
-      'w': [0, -1],
+      'w' : [ 0, -1],
       'nw': [-1, -1],
-      'n': [-1, 0],
-      'ne': [-1, 1],
-      'e': [0, 1],
-      'se': [1, 1],
-      's': [1, 0],
-      'sw': [1, -1]
+      'n' : [-1,  0],
+      'ne': [-1,  1],
+      'e' : [ 0,  1],
+      'se': [ 1,  1],
+      's' : [ 1,  0],
+      'sw': [ 1, -1]
   };
 
   this.score = {
@@ -72,11 +73,13 @@ function Game(){
   this.updateScore = function(amount){
     this.score[this.currentPlayer] += amount + 1;
     this.score[this.getOpponentName()] -= amount;
+    this.turn++;
   },
 
   this.checkForGameOver = function(){
     if (this.turn > 60){
       this.playing = false;
+      checkWinState();
     }
   },
 
@@ -89,6 +92,12 @@ function resetGame(){
   //this will reset the game board
   $('.hamburger').css({'transform':'rotateZ(0deg)','right':'2vw'});
   $('.slider-menu').css({'right':'-20vw'});
+  if (game.currentPlayer === 'b'){
+    $('.turn#firstPlayer').toggleClass('thingy');
+    $('.turn#secondPlayer').toggleClass('thingy2');
+    $('#firstPlayerPassDiv').toggleClass('passBtnClass');
+    $('#secondPlayerPassDiv').toggleClass('passBtnClass');
+  }
   game.menuOut = false;
   game = new Game();
   buildBoard();
@@ -172,7 +181,7 @@ function checkWinState(){
     console.log('win');
     $('.modal').css('display', 'block');
   }
-  var modalAway = $('div.modal-content');
+
   $(window).click(function() {
     if (event.target.className === 'modal-content') {
       return;
@@ -240,6 +249,17 @@ function handleBoardClick(){
   // It should then call handle move with an array of those elements
 }
 
+
+function aiMove(){
+  console.log(game.legalMoves);
+  if (game.legalMoves.length > 0){
+    var randomMove = Math.floor(Math.random() * game.legalMoves.length);
+    handleMove(game.legalMoves[randomMove]);
+  } else {
+    $('.passBtn2').click();
+  }
+}
+
 function handleMove(startingPosArr) {
     var piecesFlipped = null;
     var validDirections = [];
@@ -261,6 +281,13 @@ function handleMove(startingPosArr) {
             game.updateScore(piecesFlipped);
             checkForLegalMoves();
             updateDisplay();
+            if (game.mode === 'ai' && game.currentPlayer === 'w'){
+              var timer = setTimeout(function(){
+                var randTime = Math.floor(Math.random() * 1500) + 1000;
+                aiMove();
+                clearTimeout(timer);
+              }, 1800);
+            }
             return true
         } else {
             return false;
@@ -314,6 +341,7 @@ function passBtn() {
         //end the game
     }
     updateDisplay();
+    game.turn++;
 }
 
 
