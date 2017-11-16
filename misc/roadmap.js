@@ -85,8 +85,8 @@ function resetGame(){
 
 
 function buildBoard(){
-    $('.turn#firstPlayer').text('Points : ' + game.score.w);
-    $('.turn#secondPlayer').text('Points : ' + game.score.b);
+    $('.turn#topFirstPlayer').text('Points : ' + game.score.w);
+    $('.turn#topSecondPlayer').text('Points : ' + game.score.b);
     $('.turn#firstPlayer').toggleClass('thingy');
     $('.turn#secondPlayer').toggleClass('thingy2');
 
