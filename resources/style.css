@@ -109,6 +109,10 @@ body {
     height:100%;
 }
 
+.passBtnClass{
+    display: none;
+}
+
 .thingy {
     animation: pulse 1s infinite;
 }

@@ -25,7 +25,8 @@ $(document).ready(function(){
   $('.hamburger').on('click',hamburgerMenu);
   $('.reset-game').on('click',resetGame);
   $('.container').on('click','div.square', handleBoardClick);
-    $('.turn#firstPlayer').toggleClass('thingy');
+  $('.turn#firstPlayer').toggleClass('thingy');
+  $('#secondPlayerPassDiv').toggleClass('passBtnClass');
 
     buildBoard();
 });
@@ -89,6 +90,8 @@ function buildBoard(){
     $('.turn#topSecondPlayer').text('Points : ' + game.score.b);
     $('.turn#firstPlayer').toggleClass('thingy');
     $('.turn#secondPlayer').toggleClass('thingy2');
+    $('#firstPlayerPassDiv').toggleClass('passBtnClass');
+    $('#secondPlayerPassDiv').toggleClass('passBtnClass');
 
 
 
