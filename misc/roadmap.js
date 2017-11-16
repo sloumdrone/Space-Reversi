@@ -164,7 +164,7 @@ function handleMove(startingPosArr) {
             var currentPos = startPoint.slice();
             var newPos = [currentPos[0] + directions[direction][0], currentPos[1] + directions[direction][1]];
             console.log(newPos);
-            if (newPos[0] < 8 && newPos[1] < 8){
+            if (newPos[0] < 8 && newPos[1] < 8 && newPos[0] >= 0 && newPos[1] >= 0){
               if (game.gameboard[newPos[0]][newPos[1]] === game.getOpponentName()) {
                   moveCount++;
                   checkDirection(direction, newPos);
