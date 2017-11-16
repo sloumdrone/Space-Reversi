@@ -62,7 +62,11 @@ function resetGame(){
 
 
 function buildBoard(){
-  $('.turn').text(game.currentPlayer);
+    if(game.currentPlayer === 'b') {
+        $('.turn').text('Current Player : ');
+    }else if(game.currentPlayer === 'w'){
+        $('.turn').text('Current Player : ');
+    }
   $('.whitescore').text(game.score.w);
   $('.blackscore').text(game.score.b);
   $('.container').empty();
