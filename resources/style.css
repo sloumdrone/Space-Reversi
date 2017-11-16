@@ -4,13 +4,26 @@ body {
 }
 
 .header {
-    width:100%;
+    width: 100vw;
     height:10vh;
-    border: 1px solid black;
-    background-color: #45d5e5;
-    opacity: 0.5;
-    visibility: hidden;
+    /*border: 1px solid black;*/
+    /*background-color: #45d5e5;*/
+    /*opacity: 0.5;*/
+    visibility: visible;
+    position: relative;
+    text-align: center;
+    z-index: -1;
 }
+
+.header img {
+  position: absolute;
+  width: 35vw;
+  transform: translate(-50%,-0%);
+  top: 0%;
+  left: 50%;
+  /*top: 10vh;*/
+}
+
 
 .footer {
   width:100%;
@@ -25,7 +38,7 @@ body {
 .mainContent{
     width:100%;
     height:85vh;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     padding: 5vmin;
 }
 
@@ -36,7 +49,6 @@ body {
     top:50%;
     left:50%;
     margin: 0 auto;
-    background-color: transparent;
     background-size: cover;
 }
 .row{
@@ -54,9 +66,59 @@ body {
     height:99%;
     border: 1px solid rgba(240,240,240,0.45);
     border-radius: 1vmin;
-    float: left;
+    /*float: left;*/
     display: inline-block;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.8);
+}
+
+.hamburger {
+  position: fixed;
+  top: 2vmin;
+  right: 2vw;
+  width: 4vmin;
+  height: 3.5vmin;
+  transition-duration: 1s;
+}
+
+.hamburger:hover {
+  cursor: pointer;
+}
+
+.hamburger:hover .burger-line {
+  background-color: rgba(200,200,200,0.9);
+}
+
+.burger-line {
+  width: 100%;
+  height: 20%;
+  margin: 10% 0;
+  background-color: rgba(200,200,200,0.5);
+  border-radius: 1vmin;
+  transition-duration: 0.5s
+}
+
+.slider-menu {
+  width: 20vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: -20vw;
+  background: linear-gradient(to bottom left, black, transparent);
+  transition-duration: 1s;
+}
+
+.slide-item {
+  font-size: 2.5rem;
+  width: 100%;
+  text-align: center;
+  margin: 4vh 0;
+  color: rgba(200,200,200,0.6);
+  user-select: none;
+  cursor: pointer;
+}
+
+.slide-item:hover {
+  color: rgba(200,200,200,1);
 }
 
 .score-container {
