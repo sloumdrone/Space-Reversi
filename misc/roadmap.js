@@ -298,6 +298,7 @@ function handleMove(startingPosArr) {
 
 function passBtn() {
     console.log('ha');
+    var passBtnCounter = 0;
     if(game.currentPlayer === 'w'){
         game.currentPlayer = 'b'
     }else{
