@@ -70,11 +70,14 @@ function Game(){
   this.updateScore = function(amount){
     this.score[this.currentPlayer] += amount + 1;
     this.score[this.getOpponentName()] -= amount;
+    this.turn++;
+    console.log(this.turn);
   },
 
   this.checkForGameOver = function(){
     if (this.turn > 60){
       this.playing = false;
+      checkWinState();
     }
   },
 
@@ -170,7 +173,6 @@ function checkWinState(){
     console.log('win');
     $('.modal').css('display', 'block');
   }
-  var modalAway = $('div.modal-content');
   $(window).click(function() {
     if (event.target.className === 'modal-content') {
       return;
@@ -302,6 +304,7 @@ function passBtn() {
     }else{
         game.currentPlayer = 'w'
     }
+    game.turn++;
     updateDisplay();
 }
 
