@@ -26,8 +26,8 @@ body {
     top:50%;
     left:50%;
     margin: 0 auto;
-    background-color: red;
-    opacity: 0.5;
+    background-image: url('https://ak5.picdn.net/shutterstock/videos/1775912/thumb/1.jpg');
+    background-size: cover;
 }
 .row{
     width: 100%;
@@ -41,7 +41,7 @@ body {
 .square{
     width:12.5%;
     height:100%;
-    border: 1px solid black;
+    border: 1px solid rgba(240,240,240,0.3);
     float: left;
     display: inline-block;
 }
