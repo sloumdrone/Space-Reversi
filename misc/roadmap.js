@@ -8,6 +8,8 @@ $(document).ready(function(){
   //for the board, I think we should use delegated click handlers based in a container obj
 
   game = new Game();
+  $('.hamburger').on('click',hamburgerMenu);
+  $('.reset-game').on('click',resetGame);
   $('.container').on('click','div.square', handleBoardClick);
     $('.turn#firstPlayer').toggleClass('thingy');
 
@@ -23,6 +25,7 @@ function Game(){
   this.currentPlayer = 'b';
   this.turn = 1;
   this.winner = null;
+  this.menuOut = false;
 
   //'e'=empty, 'w'=white, 'b'=black, 'l'=legal
   this.gameboard = [
@@ -59,7 +62,11 @@ function Game(){
 
 function resetGame(){
   //this will reset the game board
-  game = new Game()
+  $('.hamburger').css({'transform':'rotateZ(0deg)','right':'2vw'});
+  $('.slider-menu').css({'right':'-20vw'});
+  game.menuOut = false;
+  game = new Game();
+  buildBoard();
 }
 
 
@@ -106,6 +113,19 @@ function buildBoard(){
 
       //this is the dom creation of the board, maybe make part of Game object
   }
+}
+
+function hamburgerMenu(){
+  if (!game.menuOut){
+    $(this).css({'transform':'rotateZ(90deg)','right':'22vw'});
+    $('.slider-menu').css({'right':'0'});
+    game.menuOut = true;
+  } else {
+    $(this).css({'transform':'rotateZ(0deg)','right':'2vw'});
+    $('.slider-menu').css({'right':'-20vw'});
+    game.menuOut = false;
+  }
+
 }
 
 
