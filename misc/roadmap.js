@@ -22,8 +22,18 @@ $(document).ready(function(){
   $('.container').on('click','div.square', handleBoardClick);
   $('.turn#firstPlayer').toggleClass('thingy');
   $('#secondPlayerPassDiv').toggleClass('passBtnClass');
-  $('.passBtn1').click(passBtn);
-  $('.passBtn2').click(passBtn);
+  $('.passBtn1').click(checkSameRound);
+  $('.passBtn2').click(checkSameRound);
+  $('.toggle-slider-body').click(function(){
+    if (game.mode === 'ai'){
+      $('.toggle-slider-disc').css('float','left');
+      game.mode = 'human';
+      game.clickable = true;
+    } else {
+      $('.toggle-slider-disc').css('float','right');
+      game.mode = 'ai';
+    }
+  });
   buildBoard();
 });
 
@@ -38,7 +48,13 @@ function Game(){
   this.winner = null;
   this.menuOut = false;
   this.legalMoves = [];
+  this.playerOneScore= null;
+  this.newPlayerOneScore= null;
+  this.playerTwoScore= null;
+  this.newPlayerTwoScore= null;
+  this.passButtClick = 0;
   this.mode = 'ai';
+  this.clickable = true;
 
   //'e'=empty, 'w'=white, 'b'=black, 'l'=legal
   this.gameboard = [
@@ -181,12 +197,12 @@ function checkWinState(){
     $('.modal').css('display', 'block');
   }
 
-  $(window).click(function() {
-    if (event.target.className === 'modal-content') {
-      return;
-    }
-    $('.modal').css('display', 'none');
-  });
+  // $(window).click(function() {
+  //   if (event.target.className === 'modal-content') {
+  //     return;
+  //   }
+  //   $('.modal').css('display', 'none');
+  // });
 }
 
 function checkForLegalMoves(){
@@ -241,11 +257,9 @@ function handleBoardClick(){
   var rowAttr = $(this).attr('row');
   var colAttr = $(this).attr('col');
   var clickedPos = [Number(rowAttr), Number(colAttr)];
-  handleMove(clickedPos);
-
-
-    // This should get the row and col from the element that was clicked
-  // It should then call handle move with an array of those elements
+  if (game.clickable && game.playing){
+      handleMove(clickedPos);
+  }
 }
 
 
@@ -263,8 +277,11 @@ function handleMove(startingPosArr) {
     var piecesFlipped = null;
     var validDirections = [];
     var moveCount = 0;
+    game.passButtClick=0;
+
 
     if (game.gameboard[startingPosArr[0]][startingPosArr[1]] === 'e' || game.gameboard[startingPosArr[0]][startingPosArr[1]] === 'l') {
+        game.clickable = false;
         for (item in game.directions) {
             checkDirection(item, startingPosArr);
             moveCount = 0;
@@ -282,13 +299,19 @@ function handleMove(startingPosArr) {
             updateDisplay();
             if (game.mode === 'ai' && game.currentPlayer === 'w'){
               var timer = setTimeout(function(){
+                game.clickable = false;
                 var randTime = Math.floor(Math.random() * 1500) + 1000;
                 aiMove();
+                game.clickable = true;
                 clearTimeout(timer);
               }, 1800);
+
+            } else {
+              game.clickable = true;
             }
             return true
         } else {
+            game.clickable = true;
             return false;
         }
 
@@ -322,19 +345,58 @@ function handleMove(startingPosArr) {
             }
         }
     }
+
 }
 
 function passBtn() {
     console.log('ha');
-    if(game.currentPlayer === 'w'){
-        game.currentPlayer = 'b'
-    }else{
-        game.currentPlayer = 'w'
-    }
-    game.turn++;
+        if (game.currentPlayer === 'w') {
+            game.currentPlayer = 'b';
+        } else {
+            game.currentPlayer = 'w';
+        }
+
+
+    // checkSameRound();
     updateDisplay();
-    game.turn++;
+    // game.turn++;
 }
+
+
+function checkSameRound() {
+    console.log("Current pass Button CLick" + game.passButtClick);
+
+    if(game.passButtClick === 0){
+        passBtn();
+        game.passButtClick++;
+        game.playerOneScore = game.score.b;
+        game.playerTwoScore = game.score.w;
+
+
+    }else if(game.passButtClick === 1){
+        game.newPlayerOneScore = game.score.b;
+        game.newPlayerTwoScore = game.score.w;
+
+        // if(game.currentPlayer === 'w'){
+        //     newPlayerTwoScore = game.score.w;
+        // }else{
+        //     newPlayerTwoScore = game.score.b;
+        // }
+        if(game.newPlayerOneScore === game.playerOneScore && game.newPlayerTwoScore === game.playerTwoScore){
+            checkWinState();
+            game.passButtClick=0;
+            console.log("someone might win");
+        }
+    }
+
+    console.log(game.passButtClick);
+    console.log('this is player one score' +game.playerOneScore);
+    console.log('this is player two score'+ game.playerTwoScore);
+    console.log('this is new player one score' +game.newPlayerOneScore);
+    console.log('this is new player two score'+ game.newPlayerTwoScore);
+
+}
+
 
 
 
