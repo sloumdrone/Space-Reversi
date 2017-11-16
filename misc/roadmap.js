@@ -256,11 +256,9 @@ function handleMove(startingPosArr) {
             }
             game.gameboard[startingPosArr[0]][startingPosArr[1]] = game.currentPlayer;
             game.updateScore(piecesFlipped);
-<<<<<<< HEAD
             game.currentPlayer = game.getOpponentName();
-=======
             checkForLegalMoves();
->>>>>>> d9a43398bd0b2e5b44c7c7365ca176af879fdfa4
+
             updateDisplay();
             return true
         } else {
@@ -297,9 +295,6 @@ function handleMove(startingPosArr) {
         }
     }
 }
-<<<<<<< HEAD
-=======
-
 function passBtn() {
     console.log('ha');
     if(game.currentPlayer === 'w'){
@@ -310,11 +305,6 @@ function passBtn() {
     updateDisplay();
 }
 
-
-
-
-
->>>>>>> d9a43398bd0b2e5b44c7c7365ca176af879fdfa4
 // function checkIfMoveIsLegal(arr) {
 //     var rowPosition = arr[0];
 //     var colPosition = arr[1];
