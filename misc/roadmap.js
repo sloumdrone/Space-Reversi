@@ -88,14 +88,27 @@ function Game(){
     this.score[this.currentPlayer] += amount + 1;
     this.score[this.getOpponentName()] -= amount;
     this.turn++;
+    console.log(this.turn);
 
   },
 
   this.checkForGameOver = function(){
-    if (this.turn > 60){
-      this.playing = false;
-      checkWinState();
-    }
+      var cellCounter=0;
+      for(var i=0; i<8; i++){
+          for (var j=0; j<8; j++){
+              if(this.gameboard[i][j]==="w"|| this.gameboard[i][j]==="b"){
+                  cellCounter++;
+              }
+          }
+      }
+      console.log("THis is cell counter"+ cellCounter);
+      if(cellCounter===63){
+          checkWinState();
+      }
+    // if (this.turn > 60){
+    //   this.playing = false;
+    //   checkWinState();
+    // }
   },
 
   this.getOpponentName = function(){
@@ -257,6 +270,7 @@ function handleBoardClick(){
   var rowAttr = $(this).attr('row');
   var colAttr = $(this).attr('col');
   var clickedPos = [Number(rowAttr), Number(colAttr)];
+  game.checkForGameOver();
   if (game.clickable && game.playing){
       handleMove(clickedPos);
   }
@@ -359,7 +373,7 @@ function passBtn() {
 
     // checkSameRound();
     updateDisplay();
-    // game.turn++;
+    game.turn--;
 }
 
 
@@ -390,10 +404,10 @@ function checkSameRound() {
     }
 
     console.log(game.passButtClick);
-    console.log('this is player one score' +game.playerOneScore);
-    console.log('this is player two score'+ game.playerTwoScore);
-    console.log('this is new player one score' +game.newPlayerOneScore);
-    console.log('this is new player two score'+ game.newPlayerTwoScore);
+    // console.log('this is player one score' +game.playerOneScore);
+    // console.log('this is player two score'+ game.playerTwoScore);
+    // console.log('this is new player one score' +game.newPlayerOneScore);
+    // console.log('this is new player two score'+ game.newPlayerTwoScore);
 
 }
 
