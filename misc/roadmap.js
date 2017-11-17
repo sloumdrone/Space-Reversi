@@ -205,18 +205,30 @@ function updateDisplay() {
 function checkWinState(){
   //determine if a win state has been reached
   //this can maybe be accomplished purely based on turn number
-  if (true) {
-    console.log('win');
-    $('.modal').css('display', 'block');
-  }
+  var green = game.score.w;
+  var pink = game.score.b;
 
-  // $(window).click(function() {
-  //   if (event.target.className === 'modal-content') {
-  //     return;
-  //   }
-  //   $('.modal').css('display', 'none');
-  // });
+  if (pink > green) {
+    $('.message').text('Planetary Pink is the winner!!');
+    $('.modal').css({
+        'display': 'block',
+        'background-color': 'rgba(163, 15, 126, 0.66)'
+    });
+    // var restartButton = $('<button>').text('Play again?').click(resetGame);
+    // $('.modal-content').append(restartButton);
+
+  } else if (green > pink) {
+    $('.message').text('Galactic Green is the winner!!');
+    $('.modal').css({
+        'display': 'block',
+        'background-color': 'rgba(23, 163, 15, 0.66)'
+    });
+    // var restartButton = $('<button>').text('Play again?').click(resetGame);
+    // $('.modal-content').append(restartButton);
+  } 
 }
+
+
 
 function checkForLegalMoves(){
   game.legalMoves = [];
