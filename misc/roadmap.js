@@ -120,8 +120,8 @@ function resetGame(){
 
 
 function buildBoard(){
-    $('.turn#topFirstPlayer').text('Points : ' + game.score.w);
-    $('.turn#topSecondPlayer').text('Points : ' + game.score.b);
+    $('.turn#topFirstPlayer').text(game.score.w + ' pts.');
+    $('.turn#topSecondPlayer').text(game.score.b + ' pts.');
     $('.turn#firstPlayer').toggleClass('thingy');
     $('.turn#secondPlayer').toggleClass('thingy2');
     $('#firstPlayerPassDiv').toggleClass('passBtnClass');
@@ -276,8 +276,8 @@ function handleBoardClick(){
 
 
 function aiMove(){
-  console.log(game.legalMoves);
   if (game.legalMoves.length > 0){
+    game.passButtClick = 0;
     var randomMove = Math.floor(Math.random() * game.legalMoves.length);
     handleMove(game.legalMoves[randomMove]);
   } else {
@@ -312,7 +312,6 @@ function handleMove(startingPosArr) {
             if (game.mode === 'ai' && game.currentPlayer === 'w'){
               var timer = setTimeout(function(){
                 game.clickable = false;
-                var randTime = Math.floor(Math.random() * 1500) + 1000;
                 aiMove();
                 game.clickable = true;
                 clearTimeout(timer);
@@ -361,17 +360,17 @@ function handleMove(startingPosArr) {
 }
 
 function passBtn() {
-    console.log('ha');
-        if (game.currentPlayer === 'w') {
-            game.currentPlayer = 'b';
-        } else {
-            game.currentPlayer = 'w';
+    if (game.currentPlayer === 'w') {
+        game.currentPlayer = 'b';
+
+    } else {
+        game.currentPlayer = 'w';
+        if (game.mode === 'ai'){
+          checkForLegalMoves();
+          aiMove();
         }
-
-
-    // checkSameRound();
+    }
     updateDisplay();
-    // game.turn++;
 }
 
 
@@ -379,21 +378,14 @@ function checkSameRound() {
     console.log("Current pass Button CLick" + game.passButtClick);
 
     if(game.passButtClick === 0){
-        passBtn();
         game.passButtClick++;
         game.playerOneScore = game.score.b;
         game.playerTwoScore = game.score.w;
-
-
+        passBtn();
     }else if(game.passButtClick === 1){
         game.newPlayerOneScore = game.score.b;
         game.newPlayerTwoScore = game.score.w;
 
-        // if(game.currentPlayer === 'w'){
-        //     newPlayerTwoScore = game.score.w;
-        // }else{
-        //     newPlayerTwoScore = game.score.b;
-        // }
         if(game.newPlayerOneScore === game.playerOneScore && game.newPlayerTwoScore === game.playerTwoScore){
             checkWinState();
             game.passButtClick=0;
@@ -406,21 +398,4 @@ function checkSameRound() {
     console.log('this is player two score'+ game.playerTwoScore);
     console.log('this is new player one score' +game.newPlayerOneScore);
     console.log('this is new player two score'+ game.newPlayerTwoScore);
-
 }
-
-
-
-
-
-
-// function checkIfMoveIsLegal(arr) {
-//     var rowPosition = arr[0];
-//     var colPosition = arr[1];
-//     // var currentTurn =  game.currentPlayer;
-//     var lastTurn = game.getOpponentName();
-//     if (game.gameboard[rowPosition][colPosition] === 'e') {
-//         if (arr[rowPosition - 1, colPosition - 1] === lastTurn || arr[rowPosition - 1, colPosition] === lastTurn || arr[rowPosition - 1, colPosition + 1] === lastTurn || arr[rowPosition, colPosition - 1] === lastTurn || arr[rowPosition, colPosition + 1] === lastTurn || arr[rowPosition + 1, colPosition - 1] === lastTurn || arr[rowPosition +1, colPosition] === lastTurn || arr[rowPosition+1, colPosition + 1] === lastTurn ){
-//         }
-//
-//         //on click, checks to see if the move is valid
