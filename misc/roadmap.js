@@ -1,40 +1,33 @@
 $(document).ready(function(){
-      $('span').click(function() {
-        $('.modal').css('display', 'none');
-      });
+      // $('span').click(function() {
+      //   $('.modal').css('display', 'none');
+      // });
 
-    //   $('window').click(function() {
-    //     if (event.target === modal) {
-    //       $('.modal').css('display', 'none');
-    //     }
-    //   });
-    //we can either put click handlers here or link to an initialize function
-    //for the board, I think we should use delegated click handlers based in a container obj
     game = new Game();
-    // $('.container').on('click','div.square', checkIfMoveIsLegal);
-    updateDisplay();
-  //we can either put click handlers here or link to an initialize function
-  //for the board, I think we should use delegated click handlers based in a container obj
 
-  game = new Game();
-  $('.hamburger').on('click',hamburgerMenu);
-  $('.reset-game').on('click',resetGame);
-  $('.container').on('click','div.square', handleBoardClick);
-  $('.turn#firstPlayer').toggleClass('thingy');
-  $('#secondPlayerPassDiv').toggleClass('passBtnClass');
-  $('.passBtn1').click(checkSameRound);
-  $('.passBtn2').click(checkSameRound);
-  $('.toggle-slider-body').click(function(){
-    if (game.mode === 'ai'){
-      $('.toggle-slider-disc').css('float','left');
-      game.mode = 'human';
-      game.clickable = true;
-    } else {
-      $('.toggle-slider-disc').css('float','right');
-      game.mode = 'ai';
-    }
-  });
-  buildBoard();
+    updateDisplay();
+
+
+    game = new Game();
+    $('.hamburger').on('click',hamburgerMenu);
+    $('.reset-game').on('click',resetGame);
+    $('.container').on('click','div.square', handleBoardClick);
+    $('.turn#firstPlayer').toggleClass('thingy');
+    $('#secondPlayerPassDiv').toggleClass('passBtnClass');
+    $('.passBtn1').click(checkSameRound);
+    $('.passBtn2').click(checkSameRound);
+    $('.modal-content').on('click',closeModalAndReset);
+    $('.toggle-slider-body').click(function(){
+      if (game.mode === 'ai'){
+        $('.toggle-slider-disc').css('float','left');
+        game.mode = 'human';
+        game.clickable = true;
+      } else {
+        $('.toggle-slider-disc').css('float','right');
+        game.mode = 'ai';
+      }
+    });
+    buildBoard();
 });
 
 var game;
@@ -105,10 +98,6 @@ function Game(){
       if(cellCounter===63){
           checkWinState();
       }
-    // if (this.turn > 60){
-    //   this.playing = false;
-    //   checkWinState();
-    // }
   },
 
   this.getOpponentName = function(){
@@ -209,7 +198,7 @@ function checkWinState(){
   var pink = game.score.b;
 
   if (pink > green) {
-    $('.message').text('Planetary Pink is the winner!!');
+    $('.modal-content').css({'background-image':"url('./resources/images/pink-win.jpg')",'background-size':'cover'});
     $('.modal').css({
         'display': 'block',
         'background-color': 'rgba(163, 15, 126, 0.66)'
@@ -218,14 +207,20 @@ function checkWinState(){
     // $('.modal-content').append(restartButton);
 
   } else if (green > pink) {
-    $('.message').text('Galactic Green is the winner!!');
+    $('.modal-content').css({'background-image':"url('./resources/images/green-win.jpg')",'background-size':'cover'});
     $('.modal').css({
         'display': 'block',
         'background-color': 'rgba(23, 163, 15, 0.66)'
     });
     // var restartButton = $('<button>').text('Play again?').click(resetGame);
     // $('.modal-content').append(restartButton);
-  } 
+  } else {
+    $('.modal-content').css({'background-image':"url('./resources/images/tie-game.jpg')",'background-size':'cover'});
+    $('.modal').css({
+        'display': 'block',
+        'background-color': 'rgba(197, 37,37, 0.75)'
+    });
+  }
 }
 
 
@@ -381,7 +376,12 @@ function passBtn() {
         game.currentPlayer = 'w';
         if (game.mode === 'ai'){
           checkForLegalMoves();
-          aiMove();
+          var timer = setTimeout(function(){
+            game.clickable = false;
+            aiMove();
+            game.clickable = true;
+            clearTimeout(timer);
+          }, 1800);
         }
     }
     updateDisplay();
@@ -389,8 +389,6 @@ function passBtn() {
 
 
 function checkSameRound() {
-    console.log("Current pass Button CLick" + game.passButtClick);
-
     if(game.passButtClick === 0){
         game.passButtClick++;
         game.playerOneScore = game.score.b;
@@ -403,9 +401,12 @@ function checkSameRound() {
         if(game.newPlayerOneScore === game.playerOneScore && game.newPlayerTwoScore === game.playerTwoScore){
             checkWinState();
             game.passButtClick=0;
-            console.log("someone might win");
         }
     }
+}
 
-    console.log(game.passButtClick);
+
+function closeModalAndReset() {
+  $('.modal').hide();
+  resetGame();
 }
