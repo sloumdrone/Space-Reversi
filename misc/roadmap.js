@@ -196,17 +196,18 @@ function checkWinState(){
   var pink = game.score.b;
 
   if (pink > green) {
-    console.log('green is the winner');
+    $('.message').text('Pink is the winner!!');
     $('.modal').css({
         'display': 'block',
         'background-color': 'rgba(163, 15, 126, 0.66)'
     });
   } else if (green > pink) {
+    $('.message').text('Green is the winner!!');
     $('.modal').css({
         'display': 'block',
         'background-color': 'rgba(23, 163, 15, 0.66)'
     });
-  }
+  } 
 }
 
 
