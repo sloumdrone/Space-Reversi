@@ -201,12 +201,17 @@ function checkWinState(){
         'display': 'block',
         'background-color': 'rgba(163, 15, 126, 0.66)'
     });
+    // var restartButton = $('<button>').text('Play again?').click(resetGame);
+    // $('.modal-content').append(restartButton);
+
   } else if (green > pink) {
     $('.message').text('Galactic Green is the winner!!');
     $('.modal').css({
         'display': 'block',
         'background-color': 'rgba(23, 163, 15, 0.66)'
     });
+    // var restartButton = $('<button>').text('Play again?').click(resetGame);
+    // $('.modal-content').append(restartButton);
   } 
 }
 
