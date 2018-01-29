@@ -6,9 +6,6 @@ body {
 .header {
     width: 100vw;
     height:21vh;
-    /*border: 1px solid black;*/
-    /*background-color: #45d5e5;*/
-    /*opacity: 0.5;*/
     visibility: visible;
     position: relative;
     text-align: center;
@@ -21,7 +18,6 @@ body {
   transform: translate(-50%,-0%);
   top: 0%;
   left: 50%;
-  /*top: 10vh;*/
 }
 
 
@@ -297,35 +293,6 @@ body {
   transition-duration: 1s;
 }
 
-/*.score-container {*/
-  /*display: block;*/
-  /*width: 60vmin;*/
-  /*height: 5vmin;*/
-  /*margin: 0 auto 3vmin auto;*/
-  /*border: 1px solid black;*/
-  /*visibility: hidden;*/
-/*}*/
-
-/*.whitescore, .blackscore {*/
-  /*width: 50%;*/
-  /*height: 100%;*/
-  /*display: inline-block;*/
-  /*margin: 0;*/
-  /*padding: 0;*/
-  /*text-align: center;*/
-  /*line-height: 100%;*/
-  /*font-size: 1.5rem;*/
-/*}*/
-
-/*.whitescore {*/
-  /*color: black;*/
-  /*background-color: white;*/
-/*}*/
-
-/*.blackscore {*/
-  /*color: white;*/
-  /*background-color: black;*/
-/*}*/
 
 html, body {
   margin: 0;
