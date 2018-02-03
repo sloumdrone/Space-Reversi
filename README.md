@@ -1,5 +1,5 @@
 # Space Reversi
-Space Reversi is an implementation of Othello in JavaScript, jQuery, HTML, and CSS. This implementation will keep score, determine validity of moves (and prevent illegal moves), show available moves, and declare a winner then the game is over. There are two available modes: 
+Space Reversi is an implementation of Othello in JavaScript, jQuery, HTML, and CSS. This implementation will keep score, determine validity of moves (and prevent illegal moves), show available moves, and declare a winner when the game is over. There are two available modes: 
 
 1) User vs CPU, which pairs the human palyer with an AI opponent. At present the AI is fairly dumb, but will always play legal moves. The team hopes to update the AI in the near future to actually take full board position into consideration when playing.
 
